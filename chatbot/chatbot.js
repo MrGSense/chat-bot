@@ -17,9 +17,6 @@ const sessionPath = sessionClient.sessionPath(
   config.dialogFlowSessionID
 );
 
-console.log(projectID);
-console.log(credentials);
-
 module.exports = {
   textQuery: async function(text, parameters) {
     let self = module.exports;
