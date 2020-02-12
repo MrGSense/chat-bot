@@ -8,6 +8,11 @@ module.exports = app => {
   });
 
   app.post("/api/df_event_query", async (req, res) => {
-    res.send("Hello");
+    let responses = await chatbot.eventQuery(
+      req.body.event,
+      req.body.parameters
+    );
+
+    res.send(responses[0].queryResult);
   });
 };
