@@ -9,6 +9,7 @@
   "author": "Kyle Fetterhoff",
   "license": "ISC",
   "dependencies": {
+    "dialogflow": "^1.2.0",
     "express": "^4.17.1"
   },
   "engines": {
