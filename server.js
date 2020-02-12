@@ -2,9 +2,9 @@ const express = require("express");
 
 const app = express();
 
-app.get("/", (req, res) => {
-  res.send("Hello world");
-});
+app.use(express.json());
+
+require("./routes/diaglogFlowRoutes")(app);
 
 const port = process.env.PORT || 5000;
 
