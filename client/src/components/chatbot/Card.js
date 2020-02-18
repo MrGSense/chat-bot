@@ -9,7 +9,6 @@ const Card = props => {
             alt={props.payload.fields.header.stringValue}
             src={props.payload.fields.image.stringValue}
           />
-          >
           <span className='card-title'>
             {props.payload.fields.header.stringValue}
           </span>
