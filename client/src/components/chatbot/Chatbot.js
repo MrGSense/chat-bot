@@ -49,6 +49,10 @@ class Chatbot extends Component {
     }
   }
 
+  componentDidMount() {
+    this.df_event_query("Welcome");
+  }
+
   renderMessages(stateMessages) {
     if (stateMessages) {
       return stateMessages.map((message, i) => {
