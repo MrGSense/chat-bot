@@ -11,17 +11,21 @@ const cookies = new Cookies();
 
 class Chatbot extends Component {
   messagesEnd;
+  talkInput;
   constructor(props) {
     super(props);
 
     this.state = {
-      messages: []
+      messages: [],
+      showBot: true
     };
 
     this._handleInputKeyPress = this._handleInputKeyPress.bind(this);
     this._handleQuickReplyPayload = this._handleQuickReplyPayload.bind(this);
+    this.show = this.show.bind(this);
+    this.hide = this.hide.bind(this);
 
-    if (cookies.get("userID" === undefined)) {
+    if (cookies.get("userID") === undefined) {
       cookies.set("userID", uuid(), { path: "/" });
     }
   }
@@ -75,6 +79,21 @@ class Chatbot extends Component {
 
   componentDidUpdate() {
     this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+    if (this.talkInput) {
+      this.talkInput.focus();
+    }
+  }
+
+  show(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.setState({ showBot: true });
+  }
+
+  hide(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.setState({ showBot: false });
   }
 
   renderCards(cards) {
@@ -173,49 +192,101 @@ class Chatbot extends Component {
   }
 
   render() {
-    return (
-      <div
-        style={{
-          height: 500,
-          width: 400,
-          position: "absolute",
-          bottom: 0,
-          right: 0,
-          border: "1px solid lightgrey"
-        }}
-      >
+    if (this.state.showBot) {
+      return (
         <div
-          id='chatbot'
-          style={{ height: 388, width: "100%", overflow: "auto" }}
+          style={{
+            height: 500,
+            width: 400,
+            position: "absolute",
+            bottom: 0,
+            right: 0,
+            border: "1px solid lightgrey"
+          }}
         >
-          <nav>
-            <div className='nav-wrapper'>
-              <a className='brand-logo'>Chatbot</a>
-            </div>
-          </nav>
-          {this.renderMessages(this.state.messages)}
           <div
-            ref={el => {
-              this.messagesEnd = el;
-            }}
-            style={{ float: "left", clear: "both" }}
-          ></div>
+            id='chatbot'
+            style={{ height: 388, width: "100%", overflow: "auto" }}
+          >
+            <nav>
+              <div className='nav-wrapper'>
+                <a className='brand-logo'>Chatbot</a>
+                <ul id='nav-mobile' className='right hide-on-med-and-down'>
+                  <li>
+                    <a href='/' onClick={this.hide}>
+                      Close
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+            {this.renderMessages(this.state.messages)}
+            <div
+              ref={el => {
+                this.messagesEnd = el;
+              }}
+              style={{ float: "left", clear: "both" }}
+            ></div>
+          </div>
+          <div className='col s12'>
+            <input
+              style={{
+                margin: 0,
+                paddingLeft: "1%",
+                paddingRight: "1%",
+                width: "98%"
+              }}
+              ref={input => {
+                this.talkInput = input;
+              }}
+              placeholder='Type a message: '
+              id='user_says'
+              type='text'
+              onKeyPress={this._handleInputKeyPress}
+            />
+          </div>
         </div>
-        <div className='col s12'>
-          <input
-            style={{
-              margin: 0,
-              paddingLeft: "1%",
-              paddingRight: "1%",
-              width: "98%"
-            }}
-            placeholder='Type a message: '
-            type='text'
-            onKeyPress={this._handleInputKeyPress}
-          />
+      );
+    } else {
+      return (
+        <div
+          style={{
+            height: 40,
+            width: 400,
+            position: "absolute",
+            bottom: 0,
+            right: 0,
+            border: "1px solid lightgrey"
+          }}
+        >
+          <div
+            id='chatbot'
+            style={{ height: 388, width: "100%", overflow: "auto" }}
+          >
+            <nav>
+              <div className='nav-wrapper'>
+                <a href='/' className='brand-logo'>
+                  Chatbot
+                </a>
+                <ul id='nav-mobile' className='right hide-on-med-and-down'>
+                  <li>
+                    <a href='/' onClick={this.show}>
+                      Show
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+            <div
+              ref={el => {
+                this.messagesEnd = el;
+              }}
+              style={{ float: "left", clear: "both" }}
+            ></div>
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
 
