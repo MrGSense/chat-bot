@@ -1,11 +1,11 @@
 import React from "react";
 
 const QuickReply = props => {
-  if (props.reply.structVlaue.fields.payload) {
+  if (props.reply.structValue.fields.payload) {
     return (
       <a
         style={{ margin: 3 }}
-        href=''
+        href='/'
         className='btn-floating btn-large waves-effect waves-light red'
         onClick={event =>
           props.click(

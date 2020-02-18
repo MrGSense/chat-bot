@@ -19,7 +19,7 @@ class QuickReplies extends Component {
 
   renderQuickReplies(quickReplies) {
     if (quickReplies) {
-      return QuickReplies.map((reply, i) => {
+      return quickReplies.map((reply, i) => {
         return this.renderQuickReply(reply, i);
       });
     } else {
