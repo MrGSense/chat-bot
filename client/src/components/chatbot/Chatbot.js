@@ -75,12 +75,20 @@ class Chatbot extends Component {
     }
   }
 
+  resolveAfterXSeconds(x) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(x);
+      }, x * 1000);
+    });
+  }
+
   componentDidMount() {
     this.df_event_query("Welcome");
 
     if (window.location.pathname === "/shop" && !this.state.shopWelcomeSent) {
       this.df_event_query("WELCOME_SHOP");
-      this.setState({ shopWelcomeSent: true });
+      this.setState({ shopWelcomeSent: true, showBot: true });
     }
 
     this.props.history.listen(() => {
