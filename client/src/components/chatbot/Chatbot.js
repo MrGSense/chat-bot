@@ -105,6 +105,9 @@ class Chatbot extends Component {
     event.stopPropagation();
 
     switch (payload) {
+      case "recommended_yes":
+        this.df_event_query("SHOW_RECOMMENDATION");
+        break;
       case "custom_masterclass":
         this.df_event_query("MASTERCLASS");
         break;
