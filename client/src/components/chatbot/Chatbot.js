@@ -83,10 +83,11 @@ class Chatbot extends Component {
     });
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.df_event_query("Welcome");
 
     if (window.location.pathname === "/shop" && !this.state.shopWelcomeSent) {
+      await this.resolveAfterXSeconds(1);
       this.df_event_query("WELCOME_SHOP");
       this.setState({ shopWelcomeSent: true, showBot: true });
     }
