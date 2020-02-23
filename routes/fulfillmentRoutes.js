@@ -2,6 +2,7 @@ const { WebhookClient } = require("dialogflow-fulfillment");
 const mongoose = require("mongoose");
 
 const Demand = mongoose.model("demand");
+const Coupon = mongoose.model("coupon");
 
 module.exports = app => {
   app.post("/", async (req, res) => {
@@ -21,7 +22,12 @@ module.exports = app => {
         }
       });
 
-      let responseText = `You want to see ${agent.parameters.courses}. Here is a link to all of our clothing: INSERT SITE HERE`;
+      let responseText = `You want to see ${agent.parameters.clothing}. Here is a link to all of our clothing: INSERT SITE HERE`;
+
+      let coupon = await Coupon.findOne({ 'clothing': agent.parameters.clothing });
+      if (coupon !== null) {
+        responseText = `You want to see ${agent.parameters.clothing}. Here is a link to all of our clothing: INSERT SITE HERE. And here is a coupon code for chatting with me ${coupon.link}`;
+      }
       agent.add(responseText);
     }
 

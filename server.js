@@ -14,6 +14,7 @@ mongoose.connect(config.mongoURI, {
 
 require("./models/Registration");
 require("./models/Demand");
+require("./models/Coupons");
 
 require("./routes/diaglogFlowRoutes")(app);
 require("./routes/fulfillmentRoutes")(app);
