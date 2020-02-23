@@ -15,6 +15,7 @@ mongoose.connect(config.mongoURI, {
 require("./models/Registration");
 
 require("./routes/diaglogFlowRoutes")(app);
+require("./routes/fulfillmentRoutes")(app);
 
 const port = process.env.PORT || 5000;
 
