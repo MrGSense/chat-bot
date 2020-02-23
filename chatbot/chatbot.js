@@ -2,6 +2,9 @@
 const dialogflow = require("dialogflow");
 const config = require("../config/keys");
 const structjson = require("./structjson");
+const mongoose = require("mongoose");
+
+const Registration = mongoose.model("registration");
 
 const projectId = config.googleProjectID;
 const sessionId = config.dialogFlowSessionID;
@@ -60,6 +63,33 @@ module.exports = {
     return responses;
   },
   handleAction: function(responses) {
+    let self = module.exports;
+    let queryResult = responses[0].queryResult;
+
+    switch (queryResult.action) {
+      case "recommendclothing-yes":
+        if (queryResult.allRequiredParamsPresent) {
+          self.saveRegistration(queryResult.parameters.fields);
+        }
+    }
+
     return responses;
+  },
+
+  saveRegistration: async function(fields) {
+    const registration = new Registration({
+      name: fields.name.stringValue,
+      address: fields.address.stringValue,
+      phone: fields.phone.stringValue,
+      email: fields.email.stringValue,
+      dateSent: Date.now()
+    });
+
+    try {
+      let reg = await registration.save();
+      console.log(reg);
+    } catch (err) {
+      console.log(err);
+    }
   }
 };

@@ -12,6 +12,8 @@ mongoose.connect(config.mongoURI, {
   useUnifiedTopology: true
 });
 
+require("./models/Registration");
+
 require("./routes/diaglogFlowRoutes")(app);
 
 const port = process.env.PORT || 5000;
