@@ -8,7 +8,7 @@ module.exports = app => {
   app.post("/", async (req, res) => {
     const agent = new WebhookClient({ request: req, response: res });
 
-    function clothing(agent) {
+    async function clothing(agent) {
       Demand.findOne({ clothing: agent.parameters.clothing }, function(
         err,
         clothing
@@ -24,7 +24,9 @@ module.exports = app => {
 
       let responseText = `You want to see ${agent.parameters.clothing}. Here is a link to all of our clothing: INSERT SITE HERE`;
 
-      let coupon = await Coupon.findOne({ 'clothing': agent.parameters.clothing });
+      let coupon = await Coupon.findOne({
+        clothing: agent.parameters.clothing
+      });
       if (coupon !== null) {
         responseText = `You want to see ${agent.parameters.clothing}. Here is a link to all of our clothing: INSERT SITE HERE. And here is a coupon code for chatting with me ${coupon.link}`;
       }
