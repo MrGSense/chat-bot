@@ -20,7 +20,7 @@ require("./routes/diaglogFlowRoutes")(app);
 require("./routes/fulfillmentRoutes")(app);
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(client / dist));
+  app.use(express.static("client/dist"));
 
   const path = require("path");
   app.get("*", (req, res) => {
