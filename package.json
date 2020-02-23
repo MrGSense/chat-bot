@@ -11,7 +11,9 @@
   "author": "Kyle Fetterhoff",
   "license": "ISC",
   "dependencies": {
+    "actions-on-google": "^2.12.0",
     "dialogflow": "^1.2.0",
+    "dialogflow-fulfillment": "^0.6.1",
     "express": "^4.17.1",
     "mongoose": "^5.9.2"
   },
