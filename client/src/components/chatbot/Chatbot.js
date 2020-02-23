@@ -78,18 +78,37 @@ class Chatbot extends Component {
   }
 
   async df_event_query(eventName) {
-    const res = await axios.post("/api/df_event_query", {
-      event: eventName,
-      userID: cookies.get("userID")
-    });
+    try {
+      const res = await axios.post("/api/df_event_query", {
+        event: eventName,
+        userID: cookies.get("userID")
+      });
 
-    for (let msg of res.data.fulfillmentMessages) {
-      let says = {
+      for (let msg of res.data.fulfillmentMessages) {
+        let says = {
+          speaks: "bot",
+          msg: msg
+        };
+
+        this.setState({ messages: [...this.state.messages, says] });
+      }
+    } catch (err) {
+      says = {
         speaks: "bot",
-        msg: msg
+        msg: {
+          text: {
+            text: "I'm having troubles. I need to terminate. I will be back!"
+          }
+        }
       };
 
       this.setState({ messages: [...this.state.messages, says] });
+
+      let that = this;
+
+      setTimeout(function() {
+        this.setState({ showBot: false });
+      }, 2000);
     }
   }
 
