@@ -13,6 +13,7 @@ mongoose.connect(config.mongoURI, {
 });
 
 require("./models/Registration");
+require("./models/Demand");
 
 require("./routes/diaglogFlowRoutes")(app);
 require("./routes/fulfillmentRoutes")(app);
